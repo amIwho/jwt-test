@@ -7,29 +7,39 @@ describe 'Testing modules:', ->
 
   describe 'Dependencies:', ->
     it 'should have no any dependencies', ->
-      console.log angular.module('jwtApp').requires
       expect angular.module('jwtApp').requires.length
         .toBe 0
 
   describe 'Controllers:', ->
     beforeEach module 'jwtApp'
     describe 'jwtController:', ->
-      $controller = undefined
-      controller = undefined
+      jwtController = undefined
       $scope = {}
+      beforeEach inject ($controller, $rootScope) ->
+        $scope = $rootScope.$new();
+        jwtController = $controller 'jwtController', {$scope: $scope}
 
-      beforeEach inject (_$controller_) ->
-        $controller = _$controller_
+      it 'should have hello prop', ->
+          expect $scope.hello
+            .toBe 'Hello'
 
-      beforeEach ->
-        controller = $controller 'jwtController', {$scope: $scope}
+      it 'should have obtainJWTToken method', ->
+          expect $scope.obtainJWTToken
+            .toBeDefined()
 
-      it 'should have jwtController', ->
-        expect controller
-          .toBeTruthy()
+  describe 'Factories:', ->
+    beforeEach module 'jwtApp'
 
-      it 'should have Hello in scope.hello', ->
-        expect $scope.hello
-          .toBe 'Hello'
+    describe 'authFactory:', ->
+
+      it 'should have authFactory',
+        inject (authFactory) ->
+          expect authFactory
+            .not.toEqual null
+
+      it 'should have authFactory.parseJwt method',
+        inject (authFactory) ->
+          console.log authFactory.parseJwt 'token'
+
 
 
