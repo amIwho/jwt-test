@@ -1,4 +1,6 @@
 angular
 	.module 'jwtApp', []
-	.controller 'jwtController', ($scope) ->
-		$scope.hello = "Hello"
+	.constant 'jwturl', 'http://fdapi2testing.freelancediary.com/auth'
+	.config ($httpProvider) ->
+		$httpProvider.interceptors.push 'authInterceptor'
+
