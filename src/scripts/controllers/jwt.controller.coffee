@@ -1,9 +1,10 @@
 angular
 	.module 'jwtApp'
-	.controller 'jwtController', ($scope)->
+	.controller 'jwtController', ($scope, AuthToken, Auth)->
 		$scope.hello = 'Hello'
+		$scope.token = ''
 
-		$scope.obtainJWTToken = ->
-			console.log 'hello'
+		$scope.obtainJWTtoken = ->
+			Auth.obtainJWTtoken()
 			return
 		return
